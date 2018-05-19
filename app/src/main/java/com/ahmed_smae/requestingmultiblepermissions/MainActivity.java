@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     Button btnRequestPermissions;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkRequestPermissions(){
-        for (int i = 0; i < Permissions.permissions.length; i++) {
+        for (int i = 1; i < Permissions.permissions.length - 1; i++) {
             if (ContextCompat.checkSelfPermission(this, Permissions.permissions[i]) == PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "checkRequestPermissions: permission: " + Permissions.permissions[i] + " already granted");
-                takeAction (Permissions.requestCodes[i]);
+                takeAction (i);
             } else {
-                ActivityCompat.requestPermissions(this, new String[] {Permissions.permissions[i]}, Permissions.requestCodes[i + 1]);
+                ActivityCompat.requestPermissions(this, Permissions.permissions, i);
                 Log.d(TAG, "checkRequestPermissions: requesting permission for " + Permissions.permissions[i]);
             }
         }
@@ -48,48 +49,36 @@ public class MainActivity extends AppCompatActivity {
         if (grantResults.length > 0){
             for (int i = 0; i < grantResults.length; i++){
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED){
-                    Log.d(TAG, "onRequestPermissionsResult: permission " + permissions[i] + " just granted");
+                    Log.d(TAG, "onRequestPermissionsResult: permission " + Permissions.permissions[i] + " just granted");
                     takeAction(requestCode);
                 }else{
-                    Log.d(TAG, "onRequestPermissionsResult: permission " + permissions[i] + " refused");
+                    Log.d(TAG, "onRequestPermissionsResult: permission " + Permissions.permissions[i] + " refused");
                 }
             }
         }
     }
 
 
-    private void takeAction(int i){
-        switch (i){
-            case 1:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[1] + " code now");
-                // WRITE_EXTERNAL_STORAGE
+    private void takeAction(int requestCode){
+        switch (requestCode){
+            case Permissions.WRITE_EXTERNAL_STORAGE :
+                Log.d(TAG, "onRequestPermissionsResult: can run WRITE_EXTERNAL_STORAGE and READ_EXTERNAL_STORAGE code now");
+                // WRITE_EXTERNAL_STORAGE and READ_EXTERNAL_STORAGE
 
-            case 2:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[2] + " code now");
-                // READ_EXTERNAL_STORAGE
-
-            case 3:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[3] + " code now");
+            case Permissions.CAMERA :
+                Log.d(TAG, "onRequestPermissionsResult: can run CAMERA code now");
                 // CAMERA
 
-            case 4:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[4] + " code now");
-                // ACCESS_COARSE_LOCATION
+            case Permissions.ACCESS_COARSE_LOCATION :
+                Log.d(TAG, "onRequestPermissionsResult: can run ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION code now");
+                // ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION
 
-            case 5:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[5] + " code now");
-                // ACCESS_FINE_LOCATION
+            case Permissions.READ_CONTACTS :
+                Log.d(TAG, "onRequestPermissionsResult: can run READ_CONTACTS and WRITE_CONTACTS code now");
+                // READ_CONTACTS and WRITE_CONTACTS
 
-            case 6:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[6] + " code now");
-                // READ_CONTACTS
-
-            case 7:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[7] + " code now");
-                // WRITE_CONTACTS
-
-            case 8:
-                Log.d(TAG, "onRequestPermissionsResult: can run " + Permissions.permissions[8] + " code now");
+            case Permissions.CALL_PHONE :
+                Log.d(TAG, "onRequestPermissionsResult: can run CALL_PHONE code now");
                 // CALL_PHONE
 
         }
