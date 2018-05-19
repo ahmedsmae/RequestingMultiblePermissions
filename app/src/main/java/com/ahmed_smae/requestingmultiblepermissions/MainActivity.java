@@ -2,6 +2,7 @@ package com.ahmed_smae.requestingmultiblepermissions;
 
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -25,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkRequestPermissions();
+                Snackbar.make(v, "Please Do the Action", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Action", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Toast.makeText(MainActivity.this, "Snackbar Action Clicked", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                      .show();
             }
         });
 
@@ -49,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         if (grantResults.length > 0){
             for (int i = 0; i < grantResults.length; i++){
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED){
-                    Log.d(TAG, "onRequestPermissionsResult: permission " + Permissions.permissions[i] + " just granted");
+                    Log.d(TAG, "onRequestPermissionsResult: permission " + permissions[i] + " just granted");
                     takeAction(requestCode);
                 }else{
-                    Log.d(TAG, "onRequestPermissionsResult: permission " + Permissions.permissions[i] + " refused");
+                    Log.d(TAG, "onRequestPermissionsResult: permission " + permissions[i] + " refused");
                 }
             }
         }
@@ -65,22 +75,27 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "onRequestPermissionsResult: can run WRITE_EXTERNAL_STORAGE and READ_EXTERNAL_STORAGE code now");
                 // WRITE_EXTERNAL_STORAGE and READ_EXTERNAL_STORAGE
 
+                break;
             case Permissions.CAMERA :
                 Log.d(TAG, "onRequestPermissionsResult: can run CAMERA code now");
                 // CAMERA
 
+                break;
             case Permissions.ACCESS_COARSE_LOCATION :
                 Log.d(TAG, "onRequestPermissionsResult: can run ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION code now");
                 // ACCESS_COARSE_LOCATION and ACCESS_FINE_LOCATION
 
+                break;
             case Permissions.READ_CONTACTS :
                 Log.d(TAG, "onRequestPermissionsResult: can run READ_CONTACTS and WRITE_CONTACTS code now");
                 // READ_CONTACTS and WRITE_CONTACTS
 
+                break;
             case Permissions.CALL_PHONE :
                 Log.d(TAG, "onRequestPermissionsResult: can run CALL_PHONE code now");
                 // CALL_PHONE
 
+                break;
         }
     }
 }
